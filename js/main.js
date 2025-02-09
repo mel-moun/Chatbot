@@ -26,6 +26,15 @@ document.addEventListener('DOMContentLoaded', () => {
         toggleText.textContent = isSignIn ? "Don't have an account?" : "Already have an account?";
         toggleBtn.textContent = isSignIn ? 'Sign Up' : 'Sign In';
 
+        // Reset form fields
+        form.reset(); // Resets all form fields
+
+        // Only clear name field if switching to "Sign Up"
+        if (!isSignIn) {
+            const nameFieldInput = document.getElementById('name');
+            nameFieldInput.value = ''; // Ensure the name field is cleared for sign-up
+        }
+
         // Add fade animation to form groups
         const formGroups = document.querySelectorAll('.form-group');
         formGroups.forEach((group, index) => {
