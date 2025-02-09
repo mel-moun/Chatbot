@@ -322,3 +322,109 @@ input::placeholder {
 .toggle-btn:hover::after {
     transform: scaleX(1);
 }
+
+
+/* Animations */
+@keyframes circuit1 {
+    0% { transform: translateX(-100%) scaleX(1); }
+    50% { transform: translateX(100%) scaleX(1.5); }
+    100% { transform: translateX(-100%) scaleX(1); }
+}
+
+@keyframes circuit2 {
+    0% { transform: translateY(-100%) scaleY(1); }
+    50% { transform: translateY(100%) scaleY(1.5); }
+    100% { transform: translateY(-100%) scaleY(1); }
+}
+
+@keyframes circuit3 {
+    0% { transform: translateX(100%) scaleX(1); }
+    50% { transform: translateX(-100%) scaleX(1.5); }
+    100% { transform: translateX(100%) scaleX(1); }
+}
+
+@keyframes circuit4 {
+    0% { transform: translateY(100%) scaleY(1); }
+    50% { transform: translateY(-100%) scaleY(1.5); }
+    100% { transform: translateY(100%) scaleY(1); }
+}
+
+@keyframes cardEntrance {
+    from {
+        opacity: 0;
+        transform: translateY(100px) rotateX(-10deg);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) rotateX(0);
+    }
+}
+
+@keyframes robotFloat {
+    0%, 100% {
+        transform: translateY(0) rotate(0);
+    }
+    50% {
+        transform: translateY(-5px) rotate(5deg);
+    }
+}
+
+@keyframes logoGlow {
+    0%, 100% {
+        box-shadow: 0 0 20px rgba(0, 242, 254, 0.2);
+    }
+    50% {
+        box-shadow: 0 0 30px rgba(0, 242, 254, 0.4);
+    }
+}
+
+@keyframes borderRotate {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideRight {
+    from {
+        opacity: 0;
+        transform: translateX(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
