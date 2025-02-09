@@ -71,3 +71,26 @@ body {
     height: 80px;
     animation: circuit4 4s linear infinite;
 }
+
+
+/* Card styles */
+.card {
+    position: relative;
+    z-index: 10;
+    width: 100%;
+    max-width: 28rem;
+    padding: 2rem;
+    background-color: rgba(16, 16, 16, 0.8);
+    backdrop-filter: blur(16px);
+    border: 1px solid rgba(75, 85, 99, 0.3);
+    border-radius: 1rem;
+    box-shadow: 0 0 40px rgba(0, 242, 254, 0.1);
+    transform-style: preserve-3d;
+    animation: cardEntrance 1s ease-out forwards;
+    transition: all 0.3s ease;
+}
+
+.card:hover {
+    box-shadow: 0 0 60px rgba(0, 242, 254, 0.2);
+    transform: translateY(-5px);
+}
