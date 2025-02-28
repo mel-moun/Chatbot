@@ -28,3 +28,22 @@ class RegisterAPIView(APIView):
         else:
             print("Validation Errors:", serializer.errors)
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        
+class LoginAPIView(APIView):
+    permission_classes = [permissions.AllowAny]
+
+    def post(self, request):
+        serializer = LoginSerializer(data=request.data)
+        if serializer.is_valid():
+            email = serializer.validated_data['email']
+            password = serializer.validated_data['password']
+            user = authenticate(username=email, password=password)
+            if user:
+                refresh = RefreshToken.for_user(user)
+                access_token = refresh.access_token
+                return Response({
+                    'access': str(access_token),
+                    'refresh': str(refresh)
+                }, status=status.HTTP_200_OK)
+            return Response({"detail": "Invalid credentials"}, status=status.HTTP_401_UNAUTHORIZED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
