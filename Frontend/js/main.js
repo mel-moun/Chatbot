@@ -42,6 +42,10 @@ document.addEventListener('DOMContentLoaded', () => {
         })
         .then(response => response.json())
         .then(data => {
+            if (data.access) {
+                console.log(`${isLogin ? 'Logged in' : 'Registered'} successfully`, data);
+                
+            }
         })
     });
 });
