@@ -16,6 +16,9 @@ document.addEventListener('DOMContentLoaded', () => {
             nameField.classList.add('hidden');
         } else {
             title.textContent = "Create an Account";
+            submitText.textContent = "Sign Up";
+            toggleText.textContent = "Already have an account?";
+            toggleBtn.textContent = "Sign In";
             nameField.classList.remove('hidden');
         }
     });
