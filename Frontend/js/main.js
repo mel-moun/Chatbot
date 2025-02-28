@@ -24,6 +24,8 @@ document.addEventListener('DOMContentLoaded', () => {
         e.preventDefault();
 
         const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+        const name = isLogin ? null : nameInput.value;
 
         const data = {
             email: email,
