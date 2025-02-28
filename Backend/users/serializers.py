@@ -38,3 +38,7 @@ class RegisterSerializer(serializers.ModelSerializer):
         if User.objects.filter(email=data.get('email')).exists():
             raise serializers.ValidationError("A user with this email already exists.")
         return data
+
+class LoginSerializer(serializers.Serializer):
+    email = serializers.CharField()
+    password = serializers.CharField()
