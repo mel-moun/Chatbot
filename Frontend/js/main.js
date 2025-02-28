@@ -49,6 +49,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     localStorage.setItem('username', email); 
                     window.location.href = 'welcome.html';
                 }
+            } else {
+                console.error(`${isLogin ? 'Login' : 'Registration'} failed`, data);
             }
         })
         .catch(error => {
