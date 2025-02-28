@@ -2,6 +2,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const authForm = document.getElementById('authForm');
     const toggleBtn = document.getElementById('toggleBtn');
     const toggleText = document.getElementById('toggleText');
+    const title = document.getElementById('title');
+    const submitText = document.getElementById('submitText');
+    const nameField = document.getElementById('nameField');
+    const nameInput = document.getElementById('name');
 
     let isLogin = true;
 
