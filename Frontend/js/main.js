@@ -58,10 +58,12 @@ document.addEventListener('DOMContentLoaded', () => {
             if (data.access) {
                 console.log(`${isLogin ? 'Logged in' : 'Registered'} successfully`, data);
                 
-                if (isLogin) {
-                    localStorage.setItem('username', email); 
-                    window.location.href = 'welcome.html';
-                }
+				if (isLogin) {
+					localStorage.setItem('username', email);
+					window.location.href = 'welcome.html';
+				} else {
+					window.location.href = 'login.html';
+				}
             } else {
                 console.error(`${isLogin ? 'Login' : 'Registration'} failed`, data);
             }
