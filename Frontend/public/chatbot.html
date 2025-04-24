@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AI Chatbot</title>
+  <link rel="stylesheet" href="../css/styles.css" />
+</head>
+<body>
+  <div class="container">
+    <!-- Background Circuits -->
+    <div class="background">
+      <div class="circuit circuit-1"></div>
+      <div class="circuit circuit-2"></div>
+      <div class="circuit circuit-3"></div>
+      <div class="circuit circuit-4"></div>
+    </div>
+
+    <!-- Chat Card -->
+    <div class="card">
+      <div class="header">
+        <div class="logo">
+          <svg xmlns="http://www.w3.org/2000/svg" class="robot-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v1m0 10v1m4-2a4 4 0 01-8 0V9a4 4 0 018 0v4zM8 15a4 4 0 108 0M9 12h.01M15 12h.01" />
+          </svg>
+        </div>
+        <h1>AI Chatbot</h1>
+        <p>Ask your questions and get instant AI responses!</p>
+      </div>
+
+      <div class="chat-box" id="chatbox" style="height: 300px; overflow-y: auto; padding: 1rem; background-color: rgba(30, 30, 30, 0.8); border-radius: 0.5rem; margin-bottom: 1rem; border: 1px solid rgba(79, 172, 254, 0.3);">
+        <!-- Messages appear here -->
+      </div>
+
+      <form id="chat-form" class="form" style="flex-direction: row; gap: 0.5rem;">
+        <input type="text" id="message" class="chat-input" placeholder="Ask me something..." required style="flex: 1;" />
+        <button id="toggleBtn" type="submit" class="submit-btn">Send</button>
+      </form>
+
+      <div class="toggle" style="margin-top: 2rem;">
+        <p>Want to end your session?
+          <button id="logoutBtn" class="toggle-btn">Logout</button>
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <script src="../js/main.js"></script>
+</body>
+</html>

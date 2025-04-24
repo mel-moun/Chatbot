@@ -1,3 +1,4 @@
+
 document.addEventListener('DOMContentLoaded', () => {
     const authForm = document.getElementById('authForm');
     const toggleBtn = document.getElementById('toggleBtn');
@@ -27,49 +28,98 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    authForm.addEventListener('submit', (e) => {
-        e.preventDefault();
+    if (authForm) {
+        authForm.addEventListener('submit', (e) => {
+            e.preventDefault();
 
-        const email = document.getElementById('email').value;
-        const password = document.getElementById('password').value;
-        const name = isLogin ? null : nameInput.value;
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const name = isLogin ? null : nameInput.value;
 
-        const data = {
-            email: email,
-            password: password,
-            ...(isLogin ? {} : { name: name })
-        };
+            const data = {
+                email: email,
+                password: password,
+                ...(isLogin ? {} : { name: name })
+            };
 
-        console.log('Request Data:', data);
+            console.log('Request Data:', data);
 
-        const url = isLogin 
-            ? 'http://127.0.0.1:8000/api/users/login/' 
-            : 'http://127.0.0.1:8000/api/users/register/';
+            const url = isLogin 
+                ? 'http://127.0.0.1:8000/api/users/login/' 
+                : 'http://127.0.0.1:8000/api/users/register/';
 
-        fetch(url, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(data)
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.access) {
-                console.log(`${isLogin ? 'Logged in' : 'Registered'} successfully`, data);
-                
-				if (isLogin) {
-					localStorage.setItem('username', email);
-					window.location.href = 'welcome.html';
-				} else {
-					window.location.href = 'login.html';
-				}
-            } else {
-                console.error(`${isLogin ? 'Login' : 'Registration'} failed`, data);
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
+            fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.access) {
+                    console.log(`${isLogin ? 'Logged in' : 'Registered'} successfully`, data);
+                    if (isLogin) {
+                        localStorage.setItem('username', email);
+                        window.location.href = 'chatbot.html';
+                    } else {
+                        window.location.href = 'login.html';
+                    }
+                } else {
+                    console.error(`${isLogin ? 'Login' : 'Registration'} failed`, data);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
         });
-    });
+    }
+
+    // 👇 Chatbot logic starts here
+    const chatForm = document.getElementById('chat-form');
+	const chatbox = document.getElementById('chatbox');
+	const messageInput = document.getElementById('message');
+
+	if (chatForm) {
+		chatForm.addEventListener('submit', (e) => {
+			e.preventDefault();
+			const message = messageInput.value.trim();
+			if (!message) return;
+
+			// Show user's message
+			const userMessage = document.createElement('div');
+			userMessage.className = 'message user-message';
+			userMessage.textContent = message;
+			chatbox.appendChild(userMessage);
+
+			// Clear input
+			messageInput.value = '';
+
+			// Send to backend
+			fetch('http://127.0.0.1:8000/api/chat/', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify({ message: message })
+			})
+			.then(res => res.json())
+			.then(data => {
+				const botReply = document.createElement('div');
+				botReply.className = 'message bot-message';
+				botReply.textContent = data.response;
+				chatbox.appendChild(botReply);
+
+				// Auto-scroll to bottom
+				chatbox.scrollTop = chatbox.scrollHeight;
+			})
+			.catch(err => {
+				const errorMsg = document.createElement('div');
+				errorMsg.className = 'message error-message';
+				errorMsg.textContent = 'Error connecting to chatbot.';
+				chatbox.appendChild(errorMsg);
+			});
+		});
+	}
+
 });
