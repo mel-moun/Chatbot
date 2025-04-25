@@ -437,11 +437,11 @@ input::placeholder {
     max-width: 80%;
 }
 .user-message {
-    background-color: #9ca3af;
+    background-color: #16171a;
     align-self: flex-end;
 }
 .bot-message {
-    background-color: #9ca3af;
+    background-color: #16171a;
     align-self: flex-start;
 }
 .error-message {
@@ -457,3 +457,18 @@ input::placeholder {
     padding: 10px;
     margin-bottom: 10px;
 }
+
+@media (max-width: 600px) {
+	.card {
+	  padding: 1rem;
+	}
+  
+	h1 {
+	  font-size: 1.5rem;
+	}
+  
+	input {
+	  font-size: 0.9rem;
+	}
+  }
+  

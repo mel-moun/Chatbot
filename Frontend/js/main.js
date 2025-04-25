@@ -78,7 +78,19 @@ document.addEventListener('DOMContentLoaded', () => {
     // 👇 Chatbot logic starts here
     const chatForm = document.getElementById('chat-form');
 	const chatbox = document.getElementById('chatbox');
-	const messageInput = document.getElementById('message');
+	const messageInput = document.getElementById('message');	
+
+	function addMessage(text, sender = "bot") {
+		const messageEl = document.createElement('div');
+		messageEl.className = `message ${sender}-message`;
+		messageEl.innerHTML = text;
+		chatbox.appendChild(messageEl);
+		chatbox.scrollTop = chatbox.scrollHeight;
+	}
+
+	if (chatbox) {
+		addMessage("Hello! I'm your AI assistant 🤖<br>Ask me anything!", "bot");
+	}
 
 	if (chatForm) {
 		chatForm.addEventListener('submit', (e) => {
