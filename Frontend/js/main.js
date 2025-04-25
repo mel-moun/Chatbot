@@ -75,10 +75,11 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // 👇 Chatbot logic starts here
+    //  Chatbot logic
     const chatForm = document.getElementById('chat-form');
 	const chatbox = document.getElementById('chatbox');
-	const messageInput = document.getElementById('message');	
+	const messageInput = document.getElementById('message');
+	const logoutBtn = document.getElementById('logoutBtn');	
 
 	function addMessage(text, sender = "bot") {
 		const messageEl = document.createElement('div');
@@ -107,7 +108,6 @@ document.addEventListener('DOMContentLoaded', () => {
 			// Clear input
 			messageInput.value = '';
 
-			// Send to backend
 			fetch('http://127.0.0.1:8000/api/chat/', {
 				method: 'POST',
 				headers: {
@@ -133,5 +133,20 @@ document.addEventListener('DOMContentLoaded', () => {
 			});
 		});
 	}
+
+	if (logoutBtn) {
+		logoutBtn.addEventListener('click', () => {
+			localStorage.clear(); 
+			window.location.href = 'login.html'; // redirect to login page
+		});
+	}
+	if (window.location.pathname.includes('chatbot.html')) {
+		const username = localStorage.getItem('username');
+		if (!username) {
+			window.location.href = 'login.html';
+		}
+	}
+	
+
 
 });
