@@ -1,4 +1,3 @@
-
 document.addEventListener('DOMContentLoaded', () => {
     const authForm = document.getElementById('authForm');
     const toggleBtn = document.getElementById('toggleBtn');
@@ -75,77 +74,84 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    //  Chatbot logic
+    // Chatbot logic
     const chatForm = document.getElementById('chat-form');
-	const chatbox = document.getElementById('chatbox');
-	const messageInput = document.getElementById('message');
-	const logoutBtn = document.getElementById('logoutBtn');	
+    const chatbox = document.getElementById('chatbox');
+    const messageInput = document.getElementById('message');
+    const logoutBtn = document.getElementById('logoutBtn');    
 
-	function addMessage(text, sender = "bot") {
-		const messageEl = document.createElement('div');
-		messageEl.className = `message ${sender}-message`;
-		messageEl.innerHTML = text;
-		chatbox.appendChild(messageEl);
-		chatbox.scrollTop = chatbox.scrollHeight;
-	}
+    function addMessage(text, sender = "bot") {
+        const messageEl = document.createElement('div');
+        messageEl.className = `message ${sender}-message`;
+        messageEl.innerHTML = text;
+        chatbox.appendChild(messageEl);
 
-	if (chatbox) {
-		addMessage("Hello! I'm your AI assistant 🤖<br>Ask me anything!", "bot");
-	}
+        // Scroll to the beginning of the last message (the newly added message)
+        messageEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
 
-	if (chatForm) {
-		chatForm.addEventListener('submit', (e) => {
-			e.preventDefault();
-			const message = messageInput.value.trim();
-			if (!message) return;
+    if (chatbox) {
+        addMessage("Hello! I'm your AI assistant 🤖<br>Ask me anything!", "bot");
+    }
 
-			// Show user's message
-			const userMessage = document.createElement('div');
-			userMessage.className = 'message user-message';
-			userMessage.textContent = message;
-			chatbox.appendChild(userMessage);
+    if (chatForm) {
+        chatForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const message = messageInput.value.trim();
+            if (!message) return;
 
-			// Clear input
-			messageInput.value = '';
+            // Show user's message
+            const userMessage = document.createElement('div');
+            userMessage.className = 'message user-message';
+            userMessage.textContent = message;
+            chatbox.appendChild(userMessage);
 
-			fetch('http://127.0.0.1:8000/api/chat/', {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json'
-				},
-				body: JSON.stringify({ message: message })
-			})
-			.then(res => res.json())
-			.then(data => {
-				const botReply = document.createElement('div');
-				botReply.className = 'message bot-message';
-				botReply.textContent = data.response;
-				chatbox.appendChild(botReply);
+            // Clear input
+            messageInput.value = '';
 
-				// Auto-scroll to bottom
-				chatbox.scrollTop = chatbox.scrollHeight;
-			})
-			.catch(err => {
-				const errorMsg = document.createElement('div');
-				errorMsg.className = 'message error-message';
-				errorMsg.textContent = 'Error connecting to chatbot.';
-				chatbox.appendChild(errorMsg);
-			});
-		});
-	}
+            // Scroll to the beginning of the last message (user's message)
+            userMessage.scrollIntoView({ behavior: 'smooth', block: 'start' });
 
-	if (logoutBtn) {
-		logoutBtn.addEventListener('click', () => {
-			localStorage.clear(); 
-			window.location.href = 'login.html'; // redirect to login page
-		});
-	}
-	if (window.location.pathname.includes('chatbot.html')) {
-		const username = localStorage.getItem('username');
-		if (!username) {
-			window.location.href = 'login.html';
-		}
-	}
-	
+            fetch('http://127.0.0.1:8000/api/chat/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ message: message })
+            })
+            .then(res => res.json())
+            .then(data => {
+                // Show bot's reply
+                const botReply = document.createElement('div');
+                botReply.className = 'message bot-message';
+                botReply.textContent = data.response;
+                chatbox.appendChild(botReply);
 
+                // Scroll to the beginning of the last message (bot's reply)
+                botReply.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            })
+            .catch(err => {
+                const errorMsg = document.createElement('div');
+                errorMsg.className = 'message error-message';
+                errorMsg.textContent = 'Error connecting to chatbot.';
+                chatbox.appendChild(errorMsg);
+
+                // Scroll to the beginning of the error message
+                errorMsg.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            });
+        });
+    }
+
+    if (logoutBtn) {
+        logoutBtn.addEventListener('click', () => {
+            localStorage.clear(); 
+            window.location.href = 'login.html'; // redirect to login page
+        });
+    }
+    if (window.location.pathname.includes('chatbot.html')) {
+        const username = localStorage.getItem('username');
+        if (!username) {
+            window.location.href = 'login.html';
+        }
+    }
 });
