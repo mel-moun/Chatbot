@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
     const authForm = document.getElementById('authForm');
-    const toggleBtn = document.getElementById('toggleBtn'); // This is for toggling between login and signup
+    const toggleBtn = document.getElementById('toggleBtn');
     const toggleText = document.getElementById('toggleText');
     const title = document.getElementById('title');
     const submitText = document.getElementById('submitText');
@@ -81,8 +81,16 @@ document.addEventListener('DOMContentLoaded', () => {
     const chatForm = document.getElementById('chat-form');
     const chatbox = document.getElementById('chatbox');
     const messageInput = document.getElementById('message');
-    const sendBtn = document.getElementById('sendBtn'); // The new send button for chat
+    const sendBtn = document.getElementById('sendBtn');
     const logoutBtn = document.getElementById('logoutBtn');    
+
+    // 🆕 Disable autocomplete for the chat form and message input
+    if (chatForm) {
+        chatForm.setAttribute('autocomplete', 'off');
+    }
+    if (messageInput) {
+        messageInput.setAttribute('autocomplete', 'off');
+    }
 
     function addMessage(text, sender = "bot") {
         const messageEl = document.createElement('div');
@@ -92,11 +100,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Ensure scroll happens after the message is appended
         setTimeout(() => {
-            chatbox.scrollTop = chatbox.scrollHeight - messageEl.offsetHeight - 20; // Adjust 20px as needed
-        }, 100); // A slight delay to ensure the scroll occurs after message addition
+            chatbox.scrollTop = chatbox.scrollHeight - messageEl.offsetHeight - 20;
+        }, 100);
     }
 
     if (chatbox) {
+        // Clear previous messages if any
+        chatbox.innerHTML = '';
+
+        // Add welcome message
         addMessage("Hello! I'm your AI assistant 🤖<br>Ask me anything!", "bot");
     }
 
@@ -117,7 +129,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // Scroll to the top of the last message with a slight offset (20px)
             setTimeout(() => {
-                chatbox.scrollTop = chatbox.scrollHeight - userMessage.offsetHeight - 20; // Adjust 20px as needed
+                chatbox.scrollTop = chatbox.scrollHeight - userMessage.offsetHeight - 20;
             }, 100);
 
             // Send message to the bot
@@ -137,7 +149,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 // Scroll to the top of the last bot message with a slight offset (20px)
                 setTimeout(() => {
-                    chatbox.scrollTop = chatbox.scrollHeight - botReply.offsetHeight - 20; // Adjust 20px as needed
+                    chatbox.scrollTop = chatbox.scrollHeight - botReply.offsetHeight - 20;
                 }, 100);
             })
             .catch(err => {
@@ -148,7 +160,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 // Scroll to the latest error message with a slight offset (20px)
                 setTimeout(() => {
-                    chatbox.scrollTop = chatbox.scrollHeight - errorMsg.offsetHeight - 20; // Adjust 20px as needed
+                    chatbox.scrollTop = chatbox.scrollHeight - errorMsg.offsetHeight - 20;
                 }, 100);
             });
         });
@@ -157,7 +169,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (logoutBtn) {
         logoutBtn.addEventListener('click', () => {
             localStorage.clear(); 
-            window.location.href = 'login.html'; // redirect to login page
+            window.location.href = 'login.html';
         });
     }
     
