@@ -38,6 +38,18 @@ document.addEventListener('DOMContentLoaded', () => {
             const password = document.getElementById('password').value;
             const name = isLogin ? null : nameInput.value;
 
+            // Validate inputs before submitting
+            if (!isLogin) {
+                if (!name || name.trim() === "") {
+                    alert("Name is required for registration.");
+                    return;
+                }
+                if (!isValidPassword(password)) {
+                    alert("Password is too weak. It should contain at least 8 characters, one uppercase letter, one lowercase letter, and one number.");
+                    return;
+                }
+            }
+
             const data = {
                 email: email,
                 password: password,
@@ -71,13 +83,27 @@ document.addEventListener('DOMContentLoaded', () => {
                     window.location.href = 'chatbot.html';
 
                 } else {
-                    console.error(`${isLogin ? 'Login' : 'Registration'} failed`, data);
+                    if (data.email && data.email[0].includes('unique')) {
+                        alert("This email is already registered. Please log in.");
+                    } else if (data.password && data.password[0].includes('password')) {
+                        alert("The password is too weak. Please choose a stronger one.");
+                    } else {
+                        console.error(`${isLogin ? 'Login' : 'Registration'} failed`, data);
+                        alert("Something went wrong. Please try again.");
+                    }
                 }
             })
             .catch(error => {
                 console.error('Error:', error);
+                alert("Network error, please try again later.");
             });
         });
+    }
+
+    // Password strength validation function
+    function isValidPassword(password) {
+        const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
+        return passwordRegex.test(password);
     }
 
     // Chatbot logic
