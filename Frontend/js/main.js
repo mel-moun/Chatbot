@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
     const authForm = document.getElementById('authForm');
-    const toggleBtn = document.getElementById('toggleBtn');
+    const toggleBtn = document.getElementById('toggleBtn'); // This is for toggling between login and signup
     const toggleText = document.getElementById('toggleText');
     const title = document.getElementById('title');
     const submitText = document.getElementById('submitText');
@@ -9,23 +9,26 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let isLogin = true;
 
-    toggleBtn.addEventListener('click', () => {
-        isLogin = !isLogin;
+    // Toggle between login and signup forms
+    if (toggleBtn) {
+        toggleBtn.addEventListener('click', () => {
+            isLogin = !isLogin;
 
-        if (isLogin) {
-            title.textContent = "Welcome Back";
-            submitText.textContent = "Sign In";
-            toggleText.textContent = "Don't have an account?";
-            toggleBtn.textContent = "Sign Up";
-            nameField.classList.add('hidden');
-        } else {
-            title.textContent = "Create an Account";
-            submitText.textContent = "Sign Up";
-            toggleText.textContent = "Already have an account?";
-            toggleBtn.textContent = "Sign In";
-            nameField.classList.remove('hidden');
-        }
-    });
+            if (isLogin) {
+                title.textContent = "Welcome Back";
+                submitText.textContent = "Sign In";
+                toggleText.textContent = "Don't have an account?";
+                toggleBtn.textContent = "Sign Up";
+                nameField.classList.add('hidden');
+            } else {
+                title.textContent = "Create an Account";
+                submitText.textContent = "Sign Up";
+                toggleText.textContent = "Already have an account?";
+                toggleBtn.textContent = "Sign In";
+                nameField.classList.remove('hidden');
+            }
+        });
+    }
 
     if (authForm) {
         authForm.addEventListener('submit', (e) => {
@@ -78,6 +81,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const chatForm = document.getElementById('chat-form');
     const chatbox = document.getElementById('chatbox');
     const messageInput = document.getElementById('message');
+    const sendBtn = document.getElementById('sendBtn'); // The new send button for chat
     const logoutBtn = document.getElementById('logoutBtn');    
 
     function addMessage(text, sender = "bot") {
@@ -86,8 +90,10 @@ document.addEventListener('DOMContentLoaded', () => {
         messageEl.innerHTML = text;
         chatbox.appendChild(messageEl);
 
-        // Scroll to the beginning of the last message (the newly added message)
-        messageEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        // Ensure scroll happens after the message is appended
+        setTimeout(() => {
+            chatbox.scrollTop = chatbox.scrollHeight - messageEl.offsetHeight - 20; // Adjust 20px as needed
+        }, 100); // A slight delay to ensure the scroll occurs after message addition
     }
 
     if (chatbox) {
@@ -109,9 +115,12 @@ document.addEventListener('DOMContentLoaded', () => {
             // Clear input
             messageInput.value = '';
 
-            // Scroll to the beginning of the last message (user's message)
-            userMessage.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            // Scroll to the top of the last message with a slight offset (20px)
+            setTimeout(() => {
+                chatbox.scrollTop = chatbox.scrollHeight - userMessage.offsetHeight - 20; // Adjust 20px as needed
+            }, 100);
 
+            // Send message to the bot
             fetch('http://127.0.0.1:8000/api/chat/', {
                 method: 'POST',
                 headers: {
@@ -121,14 +130,15 @@ document.addEventListener('DOMContentLoaded', () => {
             })
             .then(res => res.json())
             .then(data => {
-                // Show bot's reply
                 const botReply = document.createElement('div');
                 botReply.className = 'message bot-message';
                 botReply.textContent = data.response;
                 chatbox.appendChild(botReply);
 
-                // Scroll to the beginning of the last message (bot's reply)
-                botReply.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                // Scroll to the top of the last bot message with a slight offset (20px)
+                setTimeout(() => {
+                    chatbox.scrollTop = chatbox.scrollHeight - botReply.offsetHeight - 20; // Adjust 20px as needed
+                }, 100);
             })
             .catch(err => {
                 const errorMsg = document.createElement('div');
@@ -136,8 +146,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 errorMsg.textContent = 'Error connecting to chatbot.';
                 chatbox.appendChild(errorMsg);
 
-                // Scroll to the beginning of the error message
-                errorMsg.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                // Scroll to the latest error message with a slight offset (20px)
+                setTimeout(() => {
+                    chatbox.scrollTop = chatbox.scrollHeight - errorMsg.offsetHeight - 20; // Adjust 20px as needed
+                }, 100);
             });
         });
     }
@@ -148,6 +160,7 @@ document.addEventListener('DOMContentLoaded', () => {
             window.location.href = 'login.html'; // redirect to login page
         });
     }
+    
     if (window.location.pathname.includes('chatbot.html')) {
         const username = localStorage.getItem('username');
         if (!username) {
