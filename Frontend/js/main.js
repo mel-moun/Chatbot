@@ -61,12 +61,15 @@ document.addEventListener('DOMContentLoaded', () => {
             .then(data => {
                 if (data.access) {
                     console.log(`${isLogin ? 'Logged in' : 'Registered'} successfully`, data);
-                    if (isLogin) {
-                        localStorage.setItem('username', email);
-                        window.location.href = 'chatbot.html';
-                    } else {
-                        window.location.href = 'login.html';
-                    }
+
+                    // Save tokens and email regardless of login or signup
+                    localStorage.setItem('access_token', data.access);
+                    localStorage.setItem('refresh_token', data.refresh);
+                    localStorage.setItem('username', email);
+
+                    // Redirect directly to chatbot after signup or login
+                    window.location.href = 'chatbot.html';
+
                 } else {
                     console.error(`${isLogin ? 'Login' : 'Registration'} failed`, data);
                 }
