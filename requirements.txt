@@ -7,7 +7,7 @@ PyJWT==2.10.1
 sqlparse==0.5.3
 typing_extensions==4.12.2
 
-n>
+
 together==1.5.5
 python-dotenv>=0.19.0
 

@@ -7,7 +7,7 @@ function App() {
     { type: 'bot', content: 'Hello! How can I help you today?' }
   ]);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     if (message.trim()) {
       setMessages([...messages, { type: 'user', content: message }]);
