@@ -141,7 +141,10 @@ REST_FRAMEWORK = {
     ],
 }
 
-CORS_ALLOW_ALL_ORIGINS = True # change it after
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:5173",  # your frontend dev server
+]
+
 
 AUTH_USER_MODEL = 'users.User'
 
