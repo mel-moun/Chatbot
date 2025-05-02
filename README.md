@@ -99,7 +99,7 @@ frontend/
 
 2. Create and activate a virtual environment:
    ```bash
-   python -m venv venv
+   python3 -m venv venv
    source venv/bin/activate  # On Windows: venv\Scripts\activate
    ```
 
@@ -124,12 +124,12 @@ frontend/
 
 5. Run migrations:
    ```bash
-   python manage.py migrate
+   python3 manage.py migrate
    ```
 
 6. Start the Django development server:
    ```bash
-   python manage.py runserver
+   python3 manage.py runserver
    ```
 
 ### Frontend Setup
