@@ -127,19 +127,37 @@ frontend/
 
 5. Create PostgreSQL database and user:
    ```bash
-   # Access PostgreSQL command line
-   sudo -u postgres psql
-   
-   # Inside PostgreSQL shell, create database and user
-   CREATE DATABASE test_db;
-   CREATE USER test_user WITH PASSWORD 'test_password';
-   ALTER ROLE test_user SET client_encoding TO 'utf8';
-   ALTER ROLE test_user SET default_transaction_isolation TO 'read committed';
-   ALTER ROLE test_user SET timezone TO 'UTC';
-   GRANT ALL PRIVILEGES ON DATABASE test_db TO test_user;
-   
-   # Exit PostgreSQL shell
-   \q
+    -- Create database and user
+    CREATE DATABASE test_db;
+    CREATE USER test_user WITH PASSWORD 'test_password';
+    
+    -- Recommended user settings
+    ALTER ROLE test_user SET client_encoding TO 'utf8';
+    ALTER ROLE test_user SET default_transaction_isolation TO 'read committed';
+    ALTER ROLE test_user SET timezone TO 'UTC';
+    
+    -- Grant privileges
+    GRANT ALL PRIVILEGES ON DATABASE test_db TO test_user;
+    
+    -- Connect to the database
+    \c test_db
+    
+    -- Grant schema and object-level privileges
+    ALTER SCHEMA public OWNER TO test_user;
+    GRANT ALL ON SCHEMA public TO test_user;
+    GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO test_user;
+    GRANT ALL PRIVILEGES ON ALL SEQUENCES IN SCHEMA public TO test_user;
+    GRANT ALL PRIVILEGES ON ALL FUNCTIONS IN SCHEMA public TO test_user;
+    
+    -- Optional extensions
+    CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+    CREATE EXTENSION IF NOT EXISTS pg_trgm;
+    
+    -- Set search path
+    ALTER ROLE test_user SET search_path TO public;
+    
+    -- Exit PostgreSQL
+     \q
    ```
 
 6. Configure environment variables:
@@ -159,7 +177,13 @@ frontend/
 7. Run migrations:
    ```bash
    cd Backend
+   # Make migrations in correct order
+   python3 manage.py makemigrations users
+   python3 manage.py makemigrations  # For other apps
+    
+   # Apply all migrations
    python3 manage.py migrate
+
    ```
 
 8. Start the Django development server:
