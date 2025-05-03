@@ -159,22 +159,26 @@ frontend/
     -- Exit PostgreSQL
      \q
    ```
-
+  
 6. Configure environment variables:
-   Create a `.env` file in the backend directory with:
-   ```
-   SECRET_KEY=django-insecure-dummyt3stingk3y
-   DEBUG=True
-   TOGETHER_API_KEY=test-dummy-key-1234
-   DB_ENGINE=django.db.backends.postgresql
-   DB_NAME=test_db
-   DB_USER=test_user
-   DB_PASSWORD=test_password
-   DB_HOST=localhost
-   DB_PORT=5432
-   ```
+    1. Go to `Together.ai` and sign up.
+    2. Get your API key from the dashboard.
+    3. Create a `.env` file in the Backend directory with the following content:
+    ```
+    SECRET_KEY=django-insecure-dummyt3stingk3y
+    DEBUG=True
+    TOGETHER_API_KEY=your-together-api-key-here
+    DB_ENGINE=django.db.backends.postgresql
+    DB_NAME=test_db
+    DB_USER=test_user
+    DB_PASSWORD=test_password
+    DB_HOST=localhost
+    DB_PORT=5432
+    ```
+    💡 You can use a dummy key like `test-dummy-key-1234` to run the project locally without chatbot functionality.
+      However, to use the AI features, you need a valid API key from Together.ai.
 
-7. Run migrations:
+8. Run migrations:
    ```bash
    cd Backend
    # Make migrations in correct order
@@ -186,7 +190,7 @@ frontend/
 
    ```
 
-8. Start the Django development server:
+9. Start the Django development server:
    ```bash
    python3 manage.py runserver
    ```
