@@ -162,7 +162,7 @@ frontend/
   
 6. Configure environment variables:
 
-   1. Go to [`Together.ai`](https://platform.together.xyz/) and sign up.
+   1. Go to [`Together.ai`](https://www.together.ai/) and sign up.
    2. Get your API key from the dashboard.
    3. Create a `.env` file in the `Backend` directory with the following content:
 
