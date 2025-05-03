@@ -111,19 +111,20 @@ frontend/
 4. Configure environment variables:
    Create a `.env` file in the backend directory with:
    ```
-   SECRET_KEY=your_django_secret_key
+   SECRET_KEY=django-insecure-dummyt3stingk3y
    DEBUG=True
-   TOGETHER_API_KEY=your_together_ai_api_key
+   TOGETHER_API_KEY=test-dummy-key-1234
    DB_ENGINE=django.db.backends.postgresql
-   DB_NAME=postgresql
-   DB_USER=postgresql_user
-   DB_PASSWORD=your_password
+   DB_NAME=test_db
+   DB_USER=test_user
+   DB_PASSWORD=test_password
    DB_HOST=localhost
    DB_PORT=5432
    ```
 
 5. Run migrations:
    ```bash
+   cd Backend
    python3 manage.py migrate
    ```
 
