@@ -14,7 +14,6 @@ A full-stack web application featuring a powerful AI chatbot powered by Together
 
 ![chatbot](https://github.com/user-attachments/assets/c3b6bbd5-dc28-4d07-a971-ece3f05355df)
 
-
 ## Features
 
 - **User Authentication System**
@@ -108,7 +107,42 @@ frontend/
    pip install -r requirements.txt
    ```
 
-4. Configure environment variables:
+4. Set up PostgreSQL database:
+   ```bash
+   # Install PostgreSQL if not already installed
+   # On Ubuntu/Debian:
+   sudo apt update
+   sudo apt install postgresql postgresql-contrib
+   
+   # On macOS with Homebrew:
+   brew install postgresql
+   
+   # Start PostgreSQL service
+   # On Ubuntu/Debian:
+   sudo service postgresql start
+   
+   # On macOS:
+   brew services start postgresql
+   ```
+
+5. Create PostgreSQL database and user:
+   ```bash
+   # Access PostgreSQL command line
+   sudo -u postgres psql
+   
+   # Inside PostgreSQL shell, create database and user
+   CREATE DATABASE test_db;
+   CREATE USER test_user WITH PASSWORD 'test_password';
+   ALTER ROLE test_user SET client_encoding TO 'utf8';
+   ALTER ROLE test_user SET default_transaction_isolation TO 'read committed';
+   ALTER ROLE test_user SET timezone TO 'UTC';
+   GRANT ALL PRIVILEGES ON DATABASE test_db TO test_user;
+   
+   # Exit PostgreSQL shell
+   \q
+   ```
+
+6. Configure environment variables:
    Create a `.env` file in the backend directory with:
    ```
    SECRET_KEY=django-insecure-dummyt3stingk3y
@@ -122,13 +156,13 @@ frontend/
    DB_PORT=5432
    ```
 
-5. Run migrations:
+7. Run migrations:
    ```bash
    cd Backend
    python3 manage.py migrate
    ```
 
-6. Start the Django development server:
+8. Start the Django development server:
    ```bash
    python3 manage.py runserver
    ```
